@@ -1,0 +1,171 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+    <h2 style="margin-top: 10px">Робота файлами</h2>
+    <form method="post" action="{{ url_for('home') }}" style="margin-top: 40px" class="row">
+        <div class="col">
+            <select name="variants" class="form-select">
+            {% if access %}
+                <option value="1">Переглянути файл</option>
+                <option value="2">Переглянути параметри файлу</option>
+                <option value="3">Записати у файл</option>
+                <option value="4">Створити файл</option>
+                <option value="5">Змінити назву файлу</option>
+                <option value="6">Перевірити чи є слово у файлі</option>
+                <option value="7">Поєднати два файли</option>
+                <option value="8">Видалити файл</option>
+            {% else %}
+                <option value="1">Переглянути файл</option>
+                <option value="2">Переглянути параметри файл</option>
+                <option value="3">Записати у файл</option>
+            {% endif %}
+            </select>
+        </div>
+
+        <div class="col">
+            <button type="submit" class="btn btn-secondary" >Обрати</button>
+        </div>
+    </form>
+
+        {% if variant!=0 %}
+            {% if variant=="1" %}
+                <form method="post" action="/read_file" style="margin-top: 40px" >
+                    <div class="form-group row" >
+                        <label for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                        <div class="col-sm-2">
+                             <button type="submit" class="btn btn-secondary">Переглянути вміст</button>
+                        </div>
+                    </div>
+
+
+                </form>
+             {% elif variant=="2" %}
+                <form method="post" action="/read_file_properties" style="margin-top: 40px">
+                    <div class="form-group row" >
+                        <label for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                        <div class="col-sm-2">
+                             <button type="submit" class="btn btn-secondary">Переглянути вміст</button>
+                        </div>
+                    </div>
+
+                </form>
+            {% elif variant=="3" %}
+                <form method="post" action="/write_to_file" style="margin-top: 40px">
+                    <div class="form-group row" >
+                        <label  for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-top: 10px">
+                        <label for="inputText" class="col-sm-2 col-form-label">Текст</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="inputText" id="inputText"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-secondary">Записати в файл</button>
+                        </div>
+                    </div>
+
+                </form>
+            {% elif variant=="4" %}
+                <form method="post" action="/create_file" style="margin-top: 40px">
+                    <div class="form-group row" >
+                        <label for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                        <div class="col-sm-2">
+                             <button type="submit" class="btn btn-secondary">Створити файл</button>
+                        </div>
+                    </div>
+
+                </form>
+            {% elif variant=="5" %}
+                <form method="post" action="/rename_file" style="margin-top: 40px">
+                    <div class="form-group row" >
+                        <label  for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-top: 10px">
+                        <label for="inputNewName" class="col-sm-2 col-form-label">Нова назва файлу</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="inputNewName" id="inputNewName"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-secondary">Змінити назву файлу</button>
+                        </div>
+                    </div>
+                </form>
+            {% elif variant=="6" %}
+                <form method="post" action="/check_word_in_file" style="margin-top: 40px">
+                <div class="form-group row" >
+                        <label  for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-top: 10px">
+                        <label for="inputFindWord" class="col-sm-2 col-form-label">Шукане слово</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="inputFindWord" id="inputFindWord"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-secondary">Перевірити</button>
+                        </div>
+                    </div>
+                </form>
+            {% elif variant=="7" %}
+                <form method="post" action="/combine_files" style="margin-top: 40px">
+                <div class="form-group row" >
+                        <label  for="file" class="col-sm-2 col-form-label">Назва першого файлу</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-top: 10px">
+                        <label for="inputSecondFile" class="col-sm-2 col-form-label">Назва другого файлу</label>
+                        <div class="col-sm-5">
+                             <input type="text" class="form-control" name="inputSecondFile" id="inputSecondFile"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-secondary">Поєднати файли</button>
+                        </div>
+                    </div>
+                </form>
+            {% elif variant=="8" %}
+                <form method="post" action="/delete_file" style="margin-top: 40px">
+                    <div class="form-group row" >
+                        <label for="file" class="col-sm-2 col-form-label">Назва файлу</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="file" id="file"/>
+                        </div>
+                        <div class="col-sm-2">
+                             <button type="submit" class="btn btn-secondary">Виадалити файл</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+
+        {% endif %}
+        {% with messages = get_flashed_messages(category_filter=["result"]) %}
+            {% if messages %}
+                <div style="margin-top: 30px">
+                    <h2>Результат:</h2>
+                    <div style="margin-top: 10px" >
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% endif %}
+        {% endwith %}
+{% endblock %}

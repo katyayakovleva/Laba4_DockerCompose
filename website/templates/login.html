@@ -1,0 +1,30 @@
+
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+    <h2>Вхід</h2>
+    <form method="post" style="margin-top: 30px" action="{{ url_for('login') }}">
+        {{ form.csrf_token() }}
+        <div class="form-group row" style="margin-top: 10px">
+            <label for="login" class="col-sm-2 col-form-label"> {{ form.login.label }}</label>
+            <div class="col-sm-10">
+                {{ form.login(class="form-control") }}
+            </div>
+        </div>
+        <div class="form-group row" style="margin-top: 10px">
+            <label for="password" class="col-sm-2 col-form-label">{{ form.password.label }}</label>
+            <div class="col-sm-10">
+                {{ form.password(class="form-control") }}
+            </div>
+        </div>
+{#        <div class="recapture-box" style="margin-top: 10px">#}
+{#            {% for error in form.recaptcha.errors %}#}
+{#                {{ error }}#}
+{#            {% endfor %}#}
+{#            {{ form.recaptcha }}#}
+{#        </div>#}
+        <div class="d-flex justify-content-end" style="margin-top: 10px">
+            {{ form.submit(class="btn btn-secondary") }}
+        </div>
+
+    </form>
+{% endblock %}
